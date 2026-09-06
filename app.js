@@ -1,106 +1,48 @@
+const $ = (s) => document.querySelector(s);
+const weatherCodes = {0:['Clear sky','☀️'],1:['Mainly clear','🌤️'],2:['Partly cloudy','⛅'],3:['Overcast','☁️'],45:['Foggy','🌫️'],48:['Icy fog','🌫️'],51:['Light drizzle','🌦️'],53:['Drizzle','🌦️'],55:['Heavy drizzle','🌧️'],61:['Light rain','🌦️'],63:['Rain','🌧️'],65:['Heavy rain','🌧️'],71:['Light snow','🌨️'],73:['Snow','🌨️'],75:['Heavy snow','❄️'],80:['Rain showers','🌦️'],81:['Rain showers','🌧️'],82:['Heavy showers','⛈️'],95:['Thunderstorm','⛈️']};
+const dayFmt = new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'numeric',month:'short'});
+$('#today').textContent = dayFmt.format(new Date());
 
-const $ = (id) => document.getElementById(id);
-
-const weatherCode = {
-  0:["Clear","☀️"], 1:["Mainly clear","🌤️"], 2:["Partly cloudy","⛅"], 3:["Overcast","☁️"],
-  45:["Fog","🌫️"], 48:["Fog","🌫️"], 51:["Light drizzle","🌦️"], 53:["Drizzle","🌦️"],
-  55:["Heavy drizzle","🌧️"], 61:["Light rain","🌦️"], 63:["Rain","🌧️"], 65:["Heavy rain","🌧️"],
-  71:["Light snow","🌨️"], 73:["Snow","🌨️"], 75:["Heavy snow","❄️"], 80:["Showers","🌦️"],
-  81:["Showers","🌧️"], 82:["Heavy showers","⛈️"], 95:["Thunderstorms","⛈️"]
-};
-
-function niceDate() {
-  const d = new Date();
-  $("todayDate").textContent = new Intl.DateTimeFormat("en-GB", {weekday:"short", day:"numeric", month:"short"}).format(d);
-}
-niceDate();
-
-async function loadWeather() {
-  try {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=52.931&longitude=1.301&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon&forecast_days=4";
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Weather request failed");
-    const data = await res.json();
-    const code = data.current.weather_code;
-    const label = weatherCode[code]?.[0] || "Weather";
-    $("temp").textContent = `${Math.round(data.current.temperature_2m)}°`;
-    $("weatherText").textContent = label;
-
-    const days = data.daily.time.slice(1,4).map((date, i) => {
-      const idx = i + 1;
-      const d = new Date(date + "T12:00:00");
-      const name = new Intl.DateTimeFormat("en-GB",{weekday:"short"}).format(d);
-      const icon = weatherCode[data.daily.weather_code[idx]]?.[1] || "🌤️";
-      return `<div class="day">
-        <div class="name">${name}</div>
-        <div class="icon">${icon}</div>
-        <div class="temps">${Math.round(data.daily.temperature_2m_max[idx])}° <span style="color:#829bb4">${Math.round(data.daily.temperature_2m_min[idx])}°</span></div>
-      </div>`;
-    }).join("");
-    $("forecast").innerHTML = days;
-  } catch (e) {
-    $("weatherText").textContent = "Weather unavailable";
-    $("forecast").innerHTML = `<div class="micro">Pull to refresh or try again shortly.</div>`;
-  }
+async function loadWeather(){
+  try{
+    const url='https://api.open-meteo.com/v1/forecast?latitude=52.9312&longitude=1.3010&current=temperature_2m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon&forecast_days=4';
+    const r=await fetch(url); if(!r.ok) throw new Error(); const d=await r.json(), current=d.current, info=weatherCodes[current.weather_code]||['Cromer weather','🌤️'];
+    $('#temperature').textContent=Math.round(current.temperature_2m)+'°'; $('#condition').textContent=info[0]; $('#weatherIcon').textContent=info[1]; $('#feelsLike').textContent='Feels like '+Math.round(current.apparent_temperature)+'°';
+    $('#forecast').innerHTML=d.daily.time.slice(1,4).map((date,i)=>{const idx=i+1,wi=weatherCodes[d.daily.weather_code[idx]]||['','🌤️'];return `<div><small>${new Intl.DateTimeFormat('en-GB',{weekday:'short'}).format(new Date(date+'T12:00:00'))}</small><span>${wi[1]}</span><b>${Math.round(d.daily.temperature_2m_max[idx])}° <i>${Math.round(d.daily.temperature_2m_min[idx])}°</i></b></div>`}).join('');
+  }catch(e){$('#condition').textContent='Weather unavailable';$('#weatherStatus').textContent='Could not refresh · tap to retry';$('#weatherStatus').onclick=loadWeather}
 }
 
-async function loadHoroscope() {
-  try {
-    const res = await fetch("https://sigastra.com/api/v1/daily?lang=en&sign=libra");
-    if (!res.ok) throw new Error("Horoscope request failed");
-    const data = await res.json();
-    $("horoscope").textContent = data.items?.[0]?.text || "Your Libra reading is taking a moment to arrive.";
-    if (data.attribution?.localizedHref) $("horoscopeCredit").href = data.attribution.localizedHref;
-    if (data.attribution?.text) $("horoscopeCredit").textContent = data.attribution.text;
-  } catch (e) {
-    $("horoscope").textContent = "Balance the practical with the enjoyable today. Keep the important conversations simple and clear.";
-  }
+const horoscopeFallback=[
+  'Balance comes from choosing what deserves your energy. A clear conversation could untangle something that has felt more complicated than it really is.',
+  'Your instinct for harmony is useful today, but do not smooth over your own priorities. One thoughtful decision will create welcome momentum.',
+  'A fresh perspective arrives when you leave a little space in the day. Trust your eye for what feels right, then take one practical step toward it.'
+];
+async function loadHoroscope(){
+  try{
+    const r=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent('https://ohmanda.com/api/horoscope/libra/')); if(!r.ok) throw new Error(); const d=await r.json();
+    $('#horoscopeText').textContent=d.horoscope||d.description||horoscopeFallback[new Date().getDate()%3]; $('#horoscopeSource').textContent='Live daily reading · Ohmanda';
+  }catch(e){$('#horoscopeText').textContent=horoscopeFallback[new Date().getDate()%3];$('#horoscopeSource').textContent='Today’s Libra reading · offline edition'}
 }
 
-function cleanTitle(title) {
-  return title.replace(/\s+-\s+[^-]+$/, "");
+const feeds=[
+  ['🇬🇧','UK','https://feeds.bbci.co.uk/news/uk/rss.xml'],['💼','Business','https://feeds.bbci.co.uk/news/business/rss.xml'],['🏠','Property','https://news.google.com/rss/search?q=UK+property+market&hl=en-GB&gl=GB&ceid=GB:en'],['🌍','World','https://feeds.bbci.co.uk/news/world/rss.xml']
+];
+async function fetchFeed([icon,label,url]){
+  const proxy='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url); const r=await fetch(proxy); if(!r.ok) throw new Error(); const d=await r.json(); const item=d.items?.[0]; if(!item) throw new Error(); return {icon,label,title:item.title,link:item.link};
 }
-
-async function loadNews() {
-  const feeds = [
-    ["🇬🇧","UK","https://news.google.com/rss?hl=en-GB&gl=GB&ceid=GB:en"],
-    ["💼","Business","https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-GB&gl=GB&ceid=GB:en"],
-    ["🏠","Property","https://news.google.com/rss/search?q=UK+property+housing+market&hl=en-GB&gl=GB&ceid=GB:en"],
-    ["🌍","World","https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-GB&gl=GB&ceid=GB:en"]
-  ];
-  try {
-    const results = await Promise.all(feeds.map(async ([icon,label,feed]) => {
-      const endpoint = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed);
-      const res = await fetch(endpoint);
-      if (!res.ok) throw new Error("News request failed");
-      const data = await res.json();
-      const item = data.items?.[0];
-      return item ? {icon,label,title:cleanTitle(item.title),link:item.link,source:data.feed?.title || "Google News"} : null;
-    }));
-    const rows = results.filter(Boolean).slice(0,4).map(n => `
-      <a class="news-item" href="${n.link}" target="_blank" rel="noopener">
-        <div class="news-icon">${n.icon}</div>
-        <div>
-          <div class="news-title">${n.title}</div>
-          <div class="news-source">${n.label}</div>
-        </div>
-        <div class="chev">›</div>
-      </a>`).join("");
-    $("newsList").innerHTML = rows || `<div class="news-placeholder">No headlines available just now.</div>`;
-  } catch (e) {
-    $("newsList").innerHTML = `
-      <a class="news-item" href="https://news.google.com/?hl=en-GB&gl=GB&ceid=GB:en" target="_blank" rel="noopener">
-        <div class="news-icon">📰</div>
-        <div><div class="news-title">Open today’s UK headlines</div><div class="news-source">Google News</div></div>
-        <div class="chev">›</div>
-      </a>`;
-  }
+async function loadNews(){
+  $('#newsList').innerHTML='<p class="loading">Gathering today’s headlines…</p>';
+  const results=await Promise.allSettled(feeds.map(fetchFeed)); const items=results.filter(x=>x.status==='fulfilled').map(x=>x.value);
+  if(!items.length){$('#newsList').innerHTML=feeds.map(([icon,label,url])=>`<a class="news-item" href="${url}" target="_blank" rel="noopener"><span class="news-icon">${icon}</span><span><b>Open today’s ${label.toLowerCase()} headlines</b><small>${label}</small></span><em>›</em></a>`).join('');$('#newsStatus').textContent='Headlines could not refresh · source links available';return}
+  $('#newsList').innerHTML=items.map(n=>`<a class="news-item" href="${n.link}" target="_blank" rel="noopener"><span class="news-icon">${n.icon}</span><span><b>${escapeHtml(n.title)}</b><small>${n.label}</small></span><em>›</em></a>`).join(''); $('#newsStatus').textContent='Updated '+new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit'}).format(new Date());
 }
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+$('#refreshNews').addEventListener('click',loadNews);
 
-loadWeather();
-loadHoroscope();
-loadNews();
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));
-}
+let tasks=[];try{tasks=JSON.parse(localStorage.getItem('robbo-tasks-v2'))||[]}catch(e){}
+function saveTasks(){localStorage.setItem('robbo-tasks-v2',JSON.stringify(tasks));renderTasks()}
+function renderTasks(){const open=tasks.filter(t=>!t.done).length;$('#taskCount').textContent=open+' left';$('#emptyTasks').hidden=tasks.length>0;$('#taskList').innerHTML=tasks.map(t=>`<li class="task ${t.done?'done':''}" data-id="${t.id}"><input type="checkbox" ${t.done?'checked':''} aria-label="Complete task"><label>${escapeHtml(t.text)}</label><button aria-label="Delete task">×</button></li>`).join('')}
+$('#taskForm').addEventListener('submit',e=>{e.preventDefault();const input=$('#taskInput'),text=input.value.trim();if(!text)return;tasks.unshift({id:Date.now(),text,done:false});input.value='';saveTasks()});
+$('#taskList').addEventListener('click',e=>{const li=e.target.closest('.task');if(!li)return;const id=Number(li.dataset.id),idx=tasks.findIndex(t=>t.id===id);if(e.target.matches('button'))tasks.splice(idx,1);else if(e.target.matches('input'))tasks[idx].done=e.target.checked;saveTasks()});
+renderTasks();loadWeather();loadHoroscope();loadNews();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
