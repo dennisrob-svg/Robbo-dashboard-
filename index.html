@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Robbo" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Robbo — Daily Dashboard</title>
+  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-tickers.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <div class="brand">Robbo</div>
+        <div class="tagline">Your daily dashboard</div>
+      </div>
+      <div class="hero-badge">
+        <div class="orb">R</div>
+        <div class="badge-copy">Curious<br>Organised<br>Ahead</div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card weather-card">
+        <div class="card-head">
+          <div>
+            <div class="eyebrow">📍 Cromer</div>
+            <h2 id="temp">--°</h2>
+            <div class="primary" id="weatherText">Loading weather…</div>
+          </div>
+          <div class="date" id="todayDate"></div>
+        </div>
+        <div class="coast-art" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="sea"></div>
+          <div class="pier"></div>
+        </div>
+        <div class="forecast" id="forecast"></div>
+        <div class="credit">Weather: Open‑Meteo</div>
+      </article>
+
+      <article class="card markets-card">
+        <div class="section-title">
+          <span>📈</span><h3>Portfolio</h3>
+        </div>
+        <div class="markets-box">
+          <tv-tickers
+            symbols="NASDAQ:IONQ,NASDAQ:RKLB,NASDAQ:RGTI"
+            direction="vertical"
+            hide-chart
+            theme="dark">
+          </tv-tickers>
+        </div>
+        <div class="micro">Market data supplied by TradingView; some exchanges may be delayed.</div>
+      </article>
+
+      <article class="card libra-card">
+        <div class="section-title">
+          <span class="libra-symbol">⚖</span>
+          <div>
+            <h3>Libra</h3>
+            <div class="sub">23 Sep – 22 Oct</div>
+          </div>
+        </div>
+        <div class="zodiac-art">
+          <div class="moon">☾</div>
+          <div class="scales">⚖</div>
+        </div>
+        <p id="horoscope">Loading today’s horoscope…</p>
+        <a id="horoscopeCredit" class="credit-link" href="https://sigastra.com/" target="_blank" rel="noopener">Powered by Sigastra</a>
+      </article>
+
+      <article class="card news-card">
+        <div class="section-title">
+          <span>📰</span><h3>Daily Briefing</h3>
+        </div>
+        <div id="newsList" class="news-list">
+          <div class="news-placeholder">Loading UK headlines…</div>
+        </div>
+        <div class="micro">Headlines are aggregated from Google News RSS.</div>
+      </article>
+    </section>
+
+    <nav class="dock" aria-label="Primary">
+      <button class="active">⌂<span>Home</span></button>
+      <button>▥<span>Finance</span></button>
+      <button>◇<span>Explore</span></button>
+      <button>□<span>Plan</span></button>
+      <button>•••<span>More</span></button>
+    </nav>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
