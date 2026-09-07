@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06101f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Robbo">
+  <meta name="description" content="Robbo's personal daily dashboard">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Robbo — Daily Dashboard</title>
+</head>
+<body>
+  <div class="aurora aurora-one"></div><div class="aurora aurora-two"></div>
+  <header class="hero">
+    <div><div class="wordmark">Robbo<span>.</span></div><p>Your daily dashboard</p></div>
+    <div class="monogram"><b>R</b><small>CURIOUS<br>ORGANISED<br>AHEAD</small></div>
+  </header>
+
+  <main>
+    <section class="card weather-card" id="weather">
+      <div class="card-head"><h2><span>●</span> Cromer</h2><time id="today"></time></div>
+      <div class="weather-now"><div><strong id="temperature">--°</strong><p id="condition">Loading weather…</p><small id="feelsLike"></small></div><div class="weather-icon" id="weatherIcon">☀</div></div>
+      <div class="sea-scene" aria-hidden="true"><i class="sun"></i><i class="pier"></i><i class="wave w1"></i><i class="wave w2"></i><i class="wave w3"></i></div>
+      <div class="forecast" id="forecast"><div>Loading Cromer forecast…</div></div>
+      <p class="source" id="weatherStatus">Live weather · Open-Meteo</p>
+    </section>
+
+    <section class="card portfolio-card" id="portfolio">
+      <div class="section-title"><div><span class="eyebrow">MARKETS</span><h2>Portfolio</h2></div><span class="live-pill"><i></i> LIVE</span></div>
+      <div class="stocks">
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/IONQ.US" target="_blank" rel="noopener" data-symbol="NYSE:IONQ"><span class="stock-logo ionq">Q</span><span><b>IONQ</b><small>IonQ · NYSE</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RKLB.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RKLB"><span class="stock-logo rklb">R</span><span><b>RKLB</b><small>Rocket Lab · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RGTI.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RGTI"><span class="stock-logo rgti">R</span><span><b>RGTI</b><small>Rigetti · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+      </div>
+      <div class="tradingview-widget-container market-strip" id="marketStrip"><span class="market-loading">Live prices loading…</span></div>
+      <a class="market-link" href="https://live.trading212.com/" target="_blank" rel="noopener">Open my Trading 212 portfolio <span>↗</span></a>
+      <p class="source">Live prices by TradingView · stock links open Trading 212.</p>
+    </section>
+
+    <section class="card horoscope-card" id="horoscope">
+      <div class="zodiac-mark">♎</div><div class="section-title"><div><span class="eyebrow">TODAY'S HOROSCOPE</span><h2>Libra</h2><small>23 Sep — 22 Oct</small></div><span class="moon">☾</span></div>
+      <p class="horoscope-copy" id="horoscopeText">Finding today’s guidance…</p>
+      <p class="source" id="horoscopeSource">Daily Libra reading</p>
+    </section>
+
+    <section class="card briefing-card" id="briefing">
+      <div class="section-title"><div><span class="eyebrow">THE SHORT VERSION</span><h2>Daily Briefing</h2></div><button class="icon-button" id="refreshNews" aria-label="Refresh news">↻</button></div>
+      <div class="news-list" id="newsList"><p class="loading">Gathering today’s headlines…</p></div>
+      <p class="source" id="newsStatus">Live UK, business, property and world news</p>
+    </section>
+
+    <section class="card tv-card" id="tv">
+      <div class="section-title"><div><span class="eyebrow">YOUR EVENING</span><h2>TV Tonight</h2></div><span class="tv-time">After 7pm</span></div>
+      <div class="tv-list">
+        <a href="https://www.radiotimes.com/tv/tv-listings/" target="_blank" rel="noopener"><span class="tv-art crime">⌕</span><span><b>Crime & drama picks</b><small>See tonight’s best British drama</small></span><em>›</em></a>
+        <a href="https://www.bbc.co.uk/iplayer/guide" target="_blank" rel="noopener"><span class="tv-art guide">▶</span><span><b>Live TV guide</b><small>What’s on now and next</small></span><em>›</em></a>
+      </div>
+      <p class="source">Tap a pick for today’s live listings.</p>
+    </section>
+
+    <section class="card tasks-card" id="tasks">
+      <div class="section-title"><div><span class="eyebrow">STAY AHEAD</span><h2>Tasks &amp; Reminders</h2></div><span class="task-count" id="taskCount">0 left</span></div>
+      <form id="taskForm"><input id="taskInput" maxlength="80" autocomplete="off" placeholder="Add a reminder…" aria-label="New reminder"><button aria-label="Add reminder">+</button></form>
+      <ul id="taskList"></ul>
+      <p class="empty-tasks" id="emptyTasks">Nothing pending — nicely organised.</p>
+      <p class="source">Saved privately on this device.</p>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Dashboard sections">
+    <a href="#weather"><span>⌂</span><small>Home</small></a><a href="#portfolio"><span>⌁</span><small>Finance</small></a><a href="#briefing"><span>◇</span><small>Explore</small></a><a href="#tasks"><span>□</span><small>Plan</small></a><a href="#tv"><span>•••</span><small>More</small></a>
+  </nav>
+  <script src="app.js" defer></script>
+</body>
+</html>
