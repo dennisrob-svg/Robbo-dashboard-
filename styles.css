@@ -4,3 +4,4 @@
 @media(min-width:700px){main{grid-template-columns:1fr 1fr;align-items:start}.weather-card,.briefing-card{grid-column:1/-1}.dock{left:50%;right:auto;width:680px;transform:translateX(-50%);border-radius:20px 20px 0 0}}
 @media(prefers-reduced-motion:no-preference){.monogram b{animation:glow 5s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 38px rgba(168,72,255,.48)}}}
 .market-strip{height:48px;margin:8px 0 -2px;overflow:hidden;border-radius:12px;background:rgba(0,7,15,.35)}
+.market-loading{display:grid;height:48px;place-items:center;color:#7891ae;font-size:11px}.portfolio-card,.horoscope-card,.briefing-card,.tv-card,.tasks-card{content-visibility:auto;contain-intrinsic-size:360px}

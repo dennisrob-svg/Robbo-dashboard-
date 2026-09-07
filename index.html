@@ -32,18 +32,13 @@
     <section class="card portfolio-card" id="portfolio">
       <div class="section-title"><div><span class="eyebrow">MARKETS</span><h2>Portfolio</h2></div><span class="live-pill"><i></i> LIVE</span></div>
       <div class="stocks">
-        <a class="stock" href="https://www.tradingview.com/symbols/NYSE-IONQ/" target="_blank" rel="noopener" data-symbol="NYSE:IONQ"><span class="stock-logo ionq">Q</span><span><b>IONQ</b><small>IonQ · NYSE</small></span><span class="quote"><b>View</b><small>live chart</small></span></a>
-        <a class="stock" href="https://www.tradingview.com/symbols/NASDAQ-RKLB/" target="_blank" rel="noopener" data-symbol="NASDAQ:RKLB"><span class="stock-logo rklb">R</span><span><b>RKLB</b><small>Rocket Lab · NASDAQ</small></span><span class="quote"><b>View</b><small>live chart</small></span></a>
-        <a class="stock" href="https://www.tradingview.com/symbols/NASDAQ-RGTI/" target="_blank" rel="noopener" data-symbol="NASDAQ:RGTI"><span class="stock-logo rgti">R</span><span><b>RGTI</b><small>Rigetti · NASDAQ</small></span><span class="quote"><b>View</b><small>live chart</small></span></a>
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/IONQ.US" target="_blank" rel="noopener" data-symbol="NYSE:IONQ"><span class="stock-logo ionq">Q</span><span><b>IONQ</b><small>IonQ · NYSE</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RKLB.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RKLB"><span class="stock-logo rklb">R</span><span><b>RKLB</b><small>Rocket Lab · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RGTI.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RGTI"><span class="stock-logo rgti">R</span><span><b>RGTI</b><small>Rigetti · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
       </div>
-      <div class="tradingview-widget-container market-strip">
-        <div class="tradingview-widget-container__widget"></div>
-        <script src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-        {"symbols":[{"proName":"NYSE:IONQ","title":"IONQ"},{"proName":"NASDAQ:RKLB","title":"RKLB"},{"proName":"NASDAQ:RGTI","title":"RGTI"}],"showSymbolLogo":false,"isTransparent":true,"displayMode":"compact","colorTheme":"dark","locale":"en"}
-        </script>
-      </div>
-      <a class="market-link" href="https://www.tradingview.com/markets/stocks-usa/market-movers-active/" target="_blank" rel="noopener">Open markets overview <span>↗</span></a>
-      <p class="source">Live market pages by TradingView; prices may be delayed.</p>
+      <div class="tradingview-widget-container market-strip" id="marketStrip"><span class="market-loading">Live prices loading…</span></div>
+      <a class="market-link" href="https://live.trading212.com/" target="_blank" rel="noopener">Open my Trading 212 portfolio <span>↗</span></a>
+      <p class="source">Live prices by TradingView · stock links open Trading 212.</p>
     </section>
 
     <section class="card horoscope-card" id="horoscope">

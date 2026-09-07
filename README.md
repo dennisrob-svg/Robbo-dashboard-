@@ -1,6 +1,6 @@
-# Robbo v2
+# Robbo v2.1
 
-A compact, installable personal dashboard for iPhone with live Cromer weather, market links, Libra horoscope, news, TV listings and device-local reminders.
+A faster, compact personal dashboard for iPhone and iPad with live Cromer weather, Trading 212 stock links, live market prices, Libra horoscope, news, TV listings and device-local reminders.
 
 ## Publish on GitHub Pages
 
