@@ -23,10 +23,23 @@
   <main>
     <section class="card weather-card" id="weather">
       <div class="card-head"><h2><span>●</span> Cromer</h2><time id="today"></time></div>
-      <div class="weather-now"><div><strong id="temperature">--°</strong><p id="condition">Loading weather…</p><small id="feelsLike"></small></div><div class="weather-icon" id="weatherIcon">☀</div></div>
-      <div class="sea-scene" aria-hidden="true"><i class="sun"></i><i class="pier"></i><i class="wave w1"></i><i class="wave w2"></i><i class="wave w3"></i></div>
-      <div class="forecast" id="forecast"><div>Loading Cromer forecast…</div></div>
-      <p class="source" id="weatherStatus">Live weather · Open-Meteo</p>
+      <div class="weather-tabs" role="tablist" aria-label="Weather forecast period">
+        <button class="active" role="tab" aria-selected="true" data-weather-tab="now">Now</button><button role="tab" aria-selected="false" data-weather-tab="today">Today</button><button role="tab" aria-selected="false" data-weather-tab="tomorrow">Tomorrow</button><button role="tab" aria-selected="false" data-weather-tab="week">7 Days</button>
+      </div>
+      <div id="weatherPanel" aria-live="polite">
+        <div class="weather-now">
+          <div class="weather-primary"><strong id="temperature">--°</strong><span id="weatherIcon" aria-hidden="true">☀️</span><div><p id="condition">Loading weather…</p><small id="feelsLike"></small></div></div>
+          <div class="wind-now"><span id="windArrow">↑</span><div><b id="windSpeed">–</b><small id="windDetail">Wind</small></div></div>
+        </div>
+        <div class="rain-callout" id="rainSummary"><span>●</span><div><small>RAIN WINDOW</small><strong>Checking the next few hours…</strong></div></div>
+        <div class="hourly-wrap"><div class="hourly" id="hourly"><div class="weather-loading">Loading Cromer forecast…</div></div></div>
+      </div>
+      <details class="marine" id="marine">
+        <summary><span class="marine-icon">≋</span><span><small>COASTAL CONDITIONS</small><b id="seaSummary">Loading sea forecast…</b></span><i>›</i></summary>
+        <div class="marine-grid"><div><small>Wave height</small><b id="waveHeight">–</b></div><div><small>Sea state</small><b id="seaState">–</b></div><div><small>Wave direction</small><b id="waveDirection">–</b></div><div><small>Wave period</small><b id="wavePeriod">–</b></div></div>
+        <p>Modelled offshore conditions near Cromer. Check local warnings before going to sea.</p>
+      </details>
+      <p class="source" id="weatherStatus">Weather &amp; marine forecast · <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
     </section>
 
     <section class="card portfolio-card" id="portfolio">
