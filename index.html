@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#06101f">
+  <meta name="theme-color" content="#f3f7fb">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Robbo">
   <meta name="description" content="Robbo's personal daily dashboard">
   <link rel="manifest" href="manifest.webmanifest">
@@ -43,21 +43,35 @@
     </section>
 
     <section class="card portfolio-card" id="portfolio">
-      <div class="section-title"><div><span class="eyebrow">MARKETS</span><h2>Portfolio</h2></div><span class="live-pill"><i></i> LIVE</span></div>
+      <div class="section-title"><div><span class="eyebrow">MARKETS</span><h2>Biggest positions</h2></div><span class="live-pill"><i></i> TOP 5</span></div>
       <div class="stocks">
-        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/IONQ.US" target="_blank" rel="noopener" data-symbol="NYSE:IONQ"><span class="stock-logo ionq">Q</span><span><b>IONQ</b><small>IonQ · NYSE</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
-        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RKLB.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RKLB"><span class="stock-logo rklb">R</span><span><b>RKLB</b><small>Rocket Lab · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
-        <a class="stock" href="https://www.trading212.com/trading-instruments/invest/RGTI.US" target="_blank" rel="noopener" data-symbol="NASDAQ:RGTI"><span class="stock-logo rgti">R</span><span><b>RGTI</b><small>Rigetti · NASDAQ</small></span><span class="quote"><b>Open</b><small>Trading 212</small></span></a>
+        <div class="stock"><span class="stock-logo rklb">R</span><span><b>Rocket Lab</b><small>RKLB · 31.19% of portfolio</small></span></div>
+        <div class="stock"><span class="stock-logo bbai">B</span><span><b>BigBear.ai</b><small>BBAI · 12.05%</small></span></div>
+        <div class="stock"><span class="stock-logo ccj">C</span><span><b>Cameco</b><small>CCJ · 10.49%</small></span></div>
+        <div class="stock"><span class="stock-logo spcx">X</span><span><b>SpaceX</b><small>SPCX · 9.86%</small></span></div>
+        <div class="stock"><span class="stock-logo swmr">S</span><span><b>Swarmer</b><small>SWMR · 9.19%</small></span></div>
       </div>
       <div class="tradingview-widget-container market-strip" id="marketStrip"><span class="market-loading">Live prices loading…</span></div>
       <a class="market-link" href="https://live.trading212.com/" target="_blank" rel="noopener">Open my Trading 212 portfolio <span>↗</span></a>
-      <p class="source">Live prices by TradingView · stock links open Trading 212.</p>
+      <p class="source">Your five largest positions. Open Trading 212 for the complete portfolio.</p>
     </section>
 
-    <section class="card horoscope-card" id="horoscope">
-      <div class="zodiac-mark">♎</div><div class="section-title"><div><span class="eyebrow">TODAY'S HOROSCOPE</span><h2>Libra</h2><small>23 Sep — 22 Oct</small></div><span class="moon">☾</span></div>
-      <p class="horoscope-copy" id="horoscopeText">Finding today’s guidance…</p>
-      <p class="source" id="horoscopeSource">Daily Libra reading</p>
+    <section class="card projects-card" id="projects">
+      <div class="section-title"><div><span class="eyebrow">WHAT MATTERS</span><h2>Your projects</h2></div><span class="project-mark">R</span></div>
+      <div class="project-grid">
+        <button type="button" data-project="Property Numbers UK"><span>PN</span><b>Property Numbers UK</b><small>Content &amp; growth</small></button>
+        <button type="button" data-project="Maris Meadow"><span>MM</span><b>Maris Meadow</b><small>Planning</small></button>
+        <button type="button" data-project="Birdseyedesign.net"><span>BD</span><b>Birdseyedesign.net</b><small>Business</small></button>
+        <button type="button" data-project="Property deals"><span>PD</span><b>Property deals</b><small>Negotiations</small></button>
+      </div>
+      <p class="source">Tap a project to add its next action.</p>
+    </section>
+
+    <section class="card outlook-card" id="outlook">
+      <div class="section-title"><div><span class="eyebrow">TODAY'S OUTLOOK</span><h2>Libra, without the fluff</h2><small>23 Sep — 22 Oct</small></div><span class="outlook-mark">♎</span></div>
+      <p class="outlook-copy" id="outlookText">Keep the numbers in front of you today. A clear decision will create more progress than another round of overthinking.</p>
+      <div class="outlook-rule"><span>Best approach</span><b id="outlookAction">Be direct, then move.</b></div>
+      <p class="source">A practical daily reading, written in your style.</p>
     </section>
 
     <section class="card briefing-card" id="briefing">
@@ -76,16 +90,16 @@
     </section>
 
     <section class="card tasks-card" id="tasks">
-      <div class="section-title"><div><span class="eyebrow">STAY AHEAD</span><h2>Tasks &amp; Reminders</h2></div><span class="task-count" id="taskCount">0 left</span></div>
-      <form id="taskForm"><input id="taskInput" maxlength="80" autocomplete="off" placeholder="Add a reminder…" aria-label="New reminder"><button aria-label="Add reminder">+</button></form>
+      <div class="section-title"><div><span class="eyebrow">MOVE THINGS FORWARD</span><h2>Next actions</h2></div><span class="task-count" id="taskCount">0 open</span></div>
+      <form id="taskForm"><select id="taskProject" aria-label="Project"><option>Property Numbers UK</option><option>Maris Meadow</option><option>Birdseyedesign.net</option><option>Property deals</option><option>Personal</option></select><input id="taskInput" maxlength="80" autocomplete="off" placeholder="What needs doing next?" aria-label="Next action"><button aria-label="Add action">+</button></form>
       <ul id="taskList"></ul>
-      <p class="empty-tasks" id="emptyTasks">Nothing pending — nicely organised.</p>
-      <p class="source">Saved privately on this device.</p>
+      <p class="empty-tasks" id="emptyTasks">No next actions yet. Choose a project and add one.</p>
+      <p class="source">Your project actions are saved privately on this device.</p>
     </section>
   </main>
 
   <nav class="dock" aria-label="Dashboard sections">
-    <a href="#weather"><span>⌂</span><small>Home</small></a><a href="#portfolio"><span>⌁</span><small>Finance</small></a><a href="#briefing"><span>◇</span><small>Explore</small></a><a href="#tasks"><span>□</span><small>Plan</small></a><a href="#tv"><span>•••</span><small>More</small></a>
+    <a href="#weather"><span>⌂</span><small>Home</small></a><a href="#portfolio"><span>⌁</span><small>Finance</small></a><a href="#briefing"><span>◇</span><small>Explore</small></a><a href="#projects"><span>□</span><small>Projects</small></a><a href="#outlook"><span>♎</span><small>Outlook</small></a>
   </nav>
   <script src="app.js" defer></script>
 </body>
